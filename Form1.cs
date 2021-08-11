@@ -28,9 +28,9 @@ namespace money_calc
             {
                 MessageBox.Show("Please enter time between recieving money");
             }
-            else if (TimeTotal.Text == string.Empty)
+            else if (TimeTotal.Text == string.Empty && MoneyWant.Text == string.Empty)
             {
-                MessageBox.Show("Please enter total time recieving money");
+                MessageBox.Show("Please enter total time recieving money and / or money wanted");
             }
             else
             {
@@ -39,13 +39,16 @@ namespace money_calc
                     //define some values
                     float moneyrecieved = float.Parse(MoneyGot.Text);
                     int timeframereceiving = int.Parse(TimeGot.Text);
-                    int timeframetotal = int.Parse(TimeTotal.Text);
                     float moneyintime; //total per days
                     int timeneeded; //the required time for the amount of money wanted
+                    if (TimeTotal.Text != string.Empty)
+                    {
+                        int timeframetotal = int.Parse(TimeTotal.Text);
+                        int timesrecieved = timeframetotal / timeframereceiving; //calculate how many times one recieves money in defined timeframe
+                        moneyintime = moneyrecieved * timesrecieved; //calculate total money over time (split into two lines due to int to float funny business)
+                        MoneyTotal.Text = moneyintime.ToString(); //output result
+                    }
 
-                    int timesrecieved = timeframetotal / timeframereceiving; //calculate how many times one recieves money in defined timeframe
-                    moneyintime = moneyrecieved * timesrecieved; //calculate total money over time (split into two lines due to int to float funny business)
-                    MoneyTotal.Text = moneyintime.ToString(); //output result
                     if (MoneyWant.Text != String.Empty) //only get text and run calculation if something has been entered
                     {
                         float moneywanted = float.Parse(MoneyWant.Text);
